@@ -1,3 +1,7 @@
+##VVS API Wrapper
+
+This was created for easy access to the VVS EFA (Elektronische Fahrplanauskunft) in Python.
+
 ### Example
 
 ```
