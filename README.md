@@ -7,9 +7,9 @@ This was created for easy access to the VVS EFA (Elektronische Fahrplanauskunft)
 ```python
 # coding: utf-8
 import datetime as dt
-from VVS_EFA import VVS_EFA
+from vvs_efa import VVS_EFA
 
-vvs_efa = VVS_EFA()
+vvs_efa = VVS_EFA.VVS_EFA()
 connections = vvs_efa.getNextConnections("Stadtbibliothek", "Feuersee", dt.datetime(2015, 7, 7, 7, 20), True)
 
 
