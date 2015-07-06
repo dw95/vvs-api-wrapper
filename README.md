@@ -4,7 +4,7 @@ This was created for easy access to the VVS EFA (Elektronische Fahrplanauskunft)
 
 ### Example
 
-```
+```python
 # coding: utf-8
 import datetime as dt
 from VVS_EFA import VVS_EFA
