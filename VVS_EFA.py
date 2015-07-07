@@ -90,10 +90,10 @@ class VVS_EFA:
 
         parameters = {}
 
-        parameters["genC"] = "1"
-        parameters["itOptionsActive"] = "1"
-        parameters["locationServerActive"] = "1"
-        parameters["ptOptionsActive"] = "1"
+        #parameters["genC"] = "1"
+        #parameters["itOptionsActive"] = "1"
+        #parameters["locationServerActive"] = "1"
+        #parameters["ptOptionsActive"] = "1"
         parameters["stateless"] = "1"
         parameters["name_origin"] = id_origin
         parameters["name_destination"] = id_destination
@@ -110,35 +110,38 @@ class VVS_EFA:
 
         parameters["routeType"] = "LEASTTIME"
         parameters["changeSpeed"] = "normal"
-        parameters["includedMeans"] = "checkbox"
-        parameters["inclMOT_0"] = "1"
-        parameters["inclMOT_1"] = "1"
-        parameters["inclMOT_2"] = "1"
-        parameters["inclMOT_3"] = "1"
-        parameters["inclMOT_4"] = "1"
-        parameters["inclMOT_5"] = "1"
-        parameters["inclMOT_6"] = "1"
-        parameters["inclMOT_7"] = "1"
-        parameters["inclMOT_8"] = "1"
-        parameters["inclMOT_9"] = "1"
-        parameters["inclMOT_10"] = "1"
-        parameters["inclMOT_11"] = "1"
-        parameters["inclMOT_12"] = "1"
-        parameters["inclMOT_13"] = "1"
-        parameters["inclMOT_14"] = "1"
-        parameters["inclMOT_15"] = "1"
-        parameters["inclMOT_16"] = "1"
-        parameters["inclMOT_17"] = "1"
+
+        #parameters["includedMeans"] = "checkbox" #does only work when inclMOT_x set
+        #parameters["inclMOT_0"] = "1"
+        #parameters["inclMOT_1"] = "1"
+        #parameters["inclMOT_2"] = "1"
+        #parameters["inclMOT_3"] = "1"
+        #parameters["inclMOT_4"] = "1"
+        #parameters["inclMOT_5"] = "1"
+        #parameters["inclMOT_6"] = "1"
+        #parameters["inclMOT_7"] = "1"
+        #parameters["inclMOT_8"] = "1"
+        #parameters["inclMOT_9"] = "1"
+        #parameters["inclMOT_10"] = "1"
+        #parameters["inclMOT_11"] = "1"
+        #parameters["inclMOT_12"] = "1"
+        #parameters["inclMOT_13"] = "1"
+        #parameters["inclMOT_14"] = "1"
+        #parameters["inclMOT_15"] = "1"
+        #parameters["inclMOT_16"] = "1"
+        #parameters["inclMOT_17"] = "1"
+
         parameters["outputFormat"] = "JSON"
-        parameters["SpEncId"] = "0"
-        parameters["anySigWhenPerfectNoOtherMatches"] = "1"
-        parameters["convertStopsPTKernel2LocationServer"] = "1"
-        parameters["convertPOIsITKernel2LocationServer"] = "1"
-        parameters["verifyAnyLocViaLocServer"] = "1"
-        parameters["w_objPrefAl"] = "12"
-        parameters["w_regPrefAm"] = "1"
-        parameters["calcOneDirection"] = "1"
-        parameters["searchLimitMinutes"] = "360"
+
+        #parameters["SpEncId"] = "0"
+        #parameters["anySigWhenPerfectNoOtherMatches"] = "1"
+        #parameters["convertStopsPTKernel2LocationServer"] = "1"
+        #parameters["convertPOIsITKernel2LocationServer"] = "1"
+        #parameters["verifyAnyLocViaLocServer"] = "1"
+        #parameters["w_objPrefAl"] = "12"
+        #parameters["w_regPrefAm"] = "1"
+        #parameters["calcOneDirection"] = "1" #if not set, first trip is last trip before date/time for departure, else first trip after date/time
+        #parameters["searchLimitMinutes"] = "360"
 
 
         req = requests.post(request_url, parameters)
