@@ -11,56 +11,58 @@ class VVS_EFA:
 
     @classmethod
     def convertNameToId(cls, name, mobile=False):
+        if name.strip() != "": #check if string is empty -> return None
+            if mobile:
+                request_url = "http://m.vvs.de/jqm/controller/XSLT_STOPFINDER_REQUEST"
+                parameters = {}
+                parameters["name_sf"] = name
+                parameters["language"] = "de"
+                parameters["stateless"] = "1"
+                parameters["locationServerActive"] = "1"
+                parameters["anyObjFilter_sf"] = "0"
+                parameters["anyMaxSizeHitList"] = "500"
+                parameters["outputFormat"] = "JSON"
+                parameters["SpEncId"] = "0"
+                parameters["type_sf"] = "any"
+                parameters["anySigWhenPerfectNoOtherMatches"] = "1"
+                parameters["convertAddressesITKernel2LocationServer"] = "1"
+                parameters["convertCoord2LocationServer"] = "1"
+                parameters["convertCrossingsITKernel2LocationServer"] = "1"
+                parameters["convertStopsPTKernel2LocationServer"] = "1"
+                parameters["convertPOIsITKernel2LocationServer"] = "1"
+                parameters["tryToFindLocalityStops"] = "1"
+                parameters["w_objPrefAl"] = "12"
+                parameters["w_regPrefAm"] = "1"
 
-        if mobile:
-            request_url = "http://m.vvs.de/jqm/controller/XSLT_STOPFINDER_REQUEST"
-            parameters = {}
-            parameters["name_sf"] = name
-            parameters["language"] = "de"
-            parameters["stateless"] = "1"
-            parameters["locationServerActive"] = "1"
-            parameters["anyObjFilter_sf"] = "0"
-            parameters["anyMaxSizeHitList"] = "500"
-            parameters["outputFormat"] = "JSON"
-            parameters["SpEncId"] = "0"
-            parameters["type_sf"] = "any"
-            parameters["anySigWhenPerfectNoOtherMatches"] = "1"
-            parameters["convertAddressesITKernel2LocationServer"] = "1"
-            parameters["convertCoord2LocationServer"] = "1"
-            parameters["convertCrossingsITKernel2LocationServer"] = "1"
-            parameters["convertStopsPTKernel2LocationServer"] = "1"
-            parameters["convertPOIsITKernel2LocationServer"] = "1"
-            parameters["tryToFindLocalityStops"] = "1"
-            parameters["w_objPrefAl"] = "12"
-            parameters["w_regPrefAm"] = "1"
+            else:
+                request_url = "http://www2.vvs.de/vvs/XSLT_STOPFINDER_REQUEST"
+                parameters = {}
+                parameters["suggest_macro"] = "vvs"
+                parameters["name_sf"] = name
+
+            req = requests.post(request_url, parameters)
+
+            points = req.json()["stopFinder"]["points"]
+
+
+            best_point_index = 0
+
+            if len(points) > 1:
+                for index, point in enumerate(points):
+                    if point["best"] == "1":
+                        best_point_index = index
+                        break
+
+                return points[best_point_index]["stateless"]
+
+            elif len(points) == 1:
+                return points["point"]["stateless"] #if one point found (no array to iterate!) -> directly return
+
+            else:
+                return None #no points found -> return None
 
         else:
-            request_url = "http://www2.vvs.de/vvs/XSLT_STOPFINDER_REQUEST"
-            parameters = {}
-            parameters["suggest_macro"] = "vvs"
-            parameters["name_sf"] = name
-
-        req = requests.post(request_url, parameters)
-
-        points = req.json()["stopFinder"]["points"]
-
-        max_quality = 0
-        max_quality_index = 0
-        best_point_index = 0
-
-        for index, point in enumerate(points):
-
-            if point["quality"] > max_quality:
-                max_quality = point["quality"]
-                max_quality_index = index
-
-            if point["best"] == "1":
-                best_point_index = index
-
-        #print points[max_quality_index]["stateless"] #highest quality rating (only stops)
-        #name + ": " + points[best_point_index]["stateless"] #vvs best ranked (best attribute set to true)
-
-        return points[best_point_index]["stateless"]
+            return None
 
 
     def getNextConnections(self, origin, destination, datetime, departure):
