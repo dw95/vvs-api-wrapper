@@ -29,6 +29,11 @@ class TestConvertNameToId(unittest.TestCase):
     def test_empty_name(self):
         self.assertEqual(vvs_efa.convertNameToId(""), None)
 
+class TestGetNextConnections(unittest.TestCase):
+
+    def test_invalid_origin(self):
+        with self.assertRaises(TypeError):
+            vvs_efa.getNextConnections("", "Feuersee", dt.datetime(2015, 7, 13, 7, 20), True)
 
 if __name__ == '__main__':
     unittest.main()

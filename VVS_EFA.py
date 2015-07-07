@@ -65,13 +65,26 @@ class VVS_EFA:
             return None
 
 
-    def getNextConnections(self, origin, destination, datetime, departure):
+    def getNextConnections(self, origin, destination, datetime, departure, search_by_name = True):
 
         """Get connections for parameter set:
                 origin: name of origin
                 destination: name of destination
                 time: datetime object of departure/arrival
-                departure: boolean --> true: time of departure; false: time of arrival"""
+                departure: boolean --> true: time of departure; false: time of arrival
+                search_by_name: boolean --> true: search by name; false: search by id"""
+
+        if search_by_name:
+            id_origin = VVS_EFA.convertNameToId(origin)
+            id_destination = VVS_EFA.convertNameToId(destination)
+            if id_origin == None:
+                raise TypeError('Origin not valid or not found.')
+            if id_destination == None:
+                raise TypeError('Destination not valid or not found.')
+
+        else:
+            id_origin = origin
+            id_destination = destination
 
         request_url = "http://m.vvs.de/jqm/controller/XSLT_TRIP_REQUEST2"
 
@@ -82,8 +95,8 @@ class VVS_EFA:
         parameters["locationServerActive"] = "1"
         parameters["ptOptionsActive"] = "1"
         parameters["stateless"] = "1"
-        parameters["name_origin"] = VVS_EFA.convertNameToId(origin)
-        parameters["name_destination"] = VVS_EFA.convertNameToId(destination)
+        parameters["name_origin"] = id_origin
+        parameters["name_destination"] = id_destination
         parameters["type_destination"] = "any"
         parameters["type_origin"] = "any"
         parameters["use_realtime"] = "1"
