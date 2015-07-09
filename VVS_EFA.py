@@ -3,7 +3,7 @@
 import datetime as dt
 import requests
 
-class VVS_EFA(object):
+class EFA(object):
 
     def __init__(self):
 
